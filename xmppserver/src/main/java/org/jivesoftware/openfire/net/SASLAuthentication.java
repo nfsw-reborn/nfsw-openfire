@@ -181,6 +181,9 @@ public class SASLAuthentication {
     {
         if ( session instanceof ClientSession )
         {
+            if (!session.isForceStandardSASL()) {
+                return "";
+            }
             final Element result = getSASLMechanismsElement( (ClientSession) session );
             return result == null ? "" : result.asXML();
         }

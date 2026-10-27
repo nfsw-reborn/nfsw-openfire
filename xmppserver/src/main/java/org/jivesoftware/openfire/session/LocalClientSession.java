@@ -368,6 +368,9 @@ public class LocalClientSession extends LocalSession implements ClientSession {
             sb.append("</starttls>");
         }
         // Include available SASL Mechanisms
+        // Preserve the Soapbox patch: Smack uses SASL; the game uses XEP-0078.
+        final String streamFrom = xpp.getAttributeValue("", "from");
+        session.setForceStandardSASL(streamFrom != null && streamFrom.contains(".engine.engine"));
         sb.append(SASLAuthentication.getSASLMechanisms(session));
         // Include Stream features
         String specificFeatures = session.getAvailableStreamFeatures();
